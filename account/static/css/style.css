@@ -1,0 +1,334 @@
+:root {
+    --backColor: #fdfdfd;
+    --colorWhite: #fff;
+    --colorLinks: #007eb8;
+    --colorOne: #202d54;
+    --colorTwo: #2c3870;
+    --colorThree: #2d2e83;
+    --colorFour: #007eb8;
+}
+
+@keyframes fadeIn {
+    from {
+       opacity: 0;
+    }
+    to {
+       opacity: 1;
+    }
+   }
+
+   @keyframes fadeOut {
+    from {
+       opacity: 1;
+    }
+    to {
+       opacity: 0;
+    }
+   }
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+    height: 100vh;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    color: var(--colorFour);
+}
+
+body {
+    height: auto;
+    min-height: 100%;
+    min-height: 100vh;
+    overflow-y: scroll; /* Mantén esta línea para permitir desplazamiento en todo el cuerpo si es necesario */
+    background-color: var(--backColor);
+    display: grid;
+    grid-template-areas:
+        "aside main main";
+    grid-template-columns: 20vw 1fr;
+    grid-template-rows: 1fr auto;
+}
+
+aside {
+    height: 100vh; /* Mantén esta línea para asegurar que el aside ocupe toda la altura disponible */
+    grid-area: "aside";
+    background-color: var(--colorOne);
+    position: sticky; /* Cambia a sticky para que se mantenga visible mientras se desplaza */
+    top: 0; /* Especifica desde dónde debe comenzar a ser fijo */
+}
+
+main {
+    grid-area: "main";
+    background-color: #f6f6f6;
+    height: 100%; /* Asegúrate de que el main pueda crecer para llenar el espacio */
+    overflow-y: auto; /* Agrega esto para permitir desplazamiento dentro del main si es necesario */
+}
+
+
+a {
+    text-decoration: none;
+}
+
+.logo {
+    height: 6.2vw;
+}
+
+/* Aside  */
+
+.content-links {
+    padding: 20px 10px;
+}
+
+.content-links p {
+    color: #f1f1f1;
+    text-align: left;
+    margin-left: 20px;
+    font-weight: bolder;
+}
+
+.nav-links {
+    margin-top: 20px;
+    border: 1px solid #fff;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.nav-links ul {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    list-style: none;
+    width: 100%;
+}
+
+.link-aside {
+    color: #fff;
+    text-decoration: none;
+    width: 100%;
+    display: block;
+    padding: 4px;
+    border-radius: 5px;
+}
+
+.link-aside:hover {
+    background-color: #dbdbdb;
+    color: #202d54;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    margin: 0px 20px;
+    padding: 0;
+    height: 100%;
+}
+
+.menu li {
+    list-style: none;
+    margin: 10px 0px;
+    font-size: clamp(0.7rem, 2vw, 1.3rem);
+}
+
+.links {
+    display: flex;
+    flex-direction: row;
+    margin: 10px 10px;
+    color: var(--colorWhite);
+    justify-content: center;
+    transition: all .3s;
+}
+
+.links p {
+    margin: 0px 10px;
+}
+
+.links:hover {
+    background-color: var(--colorTwo);
+    padding: 10px 15px;
+    border-radius: 25px;
+    margin: 0;
+    transition: all .3s;
+}
+
+
+.out {
+    position: absolute;
+    margin: 20px 20px;
+    padding: 0;
+    bottom: 0;
+    left: 15px;
+}
+
+.link {
+    display: flex;
+    flex-direction: row;
+    margin: 10px 10px;
+    color: var(--colorWhite);
+    justify-content: center;
+    transition: all .3s;
+}
+
+.link p {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 3px;
+}
+
+.link p::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: var(--colorWhite);
+    transition: width 0.6s ease-in-out;
+transform: translateX(-50%);
+}
+
+.link:hover p::after {
+    width: 100%;
+}
+
+.options {
+    background-color: #fff;
+    border-radius: 25px;
+    position: fixed;
+    right: 0;
+    margin: 15px 25px;
+    width: 260px;
+}
+
+.top-settings {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height: 40px;
+    width: 100%;
+}
+
+.top-settings p {
+    margin: 0;
+}
+
+.menu-settigns {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu-settings > li {
+    margin: 0 1rem;
+    overflow: hidden;
+}
+
+.menu-button-container {
+    display: flex;
+    height: 100%;
+    width: 30px;
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#menu-toggle {
+    display: none;
+}
+
+.menu-button,
+.menu-button::after,
+.menu-button::before {
+    display: block;
+    background-color: var(--colorOne);
+    position: absolute;
+    height: 3px;
+    width: 25px;
+    transition: transform 400ms cubic-bezier(0.23, 1, 0.32, 1);
+    border-radius: 2px;
+}
+
+.menu-button::after {
+    content: "";
+    top: 8px;
+}
+
+.menu-button::before {
+    content: "";
+    top: -8px;
+}
+
+#menu-toggle:checked + .menu-button-container .menu-button::before {
+    margin-top: 8px;
+    transform: rotate(405deg);
+}
+
+#menu-toggle:checked + .menu-button-container .menu-button::after {
+    margin-top: -8px;
+    transform: rotate(-405deg);
+  }
+  
+#menu-toggle:checked + .menu-button-container .menu-button {
+    background: rgba(255, 255, 255, 0);
+}
+
+
+.menu-settigns {
+    display: none;
+    animation: fadeOut 1s ease-in-out forwards;
+}
+
+.hidden {
+    display: block;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.menu-settigns li {
+    margin: 10px 20px;
+    color: var(--colorOne);
+    border-bottom: 2px solid var(--colorLinks);
+}
+
+@media only screen and (max-width:1200px){
+    .menu, .out {
+        margin: 0px 5px;
+    }
+    .out {
+        margin-bottom: 10px;
+    }
+    .links p {
+        margin-left: 4px;
+    }
+
+}
+
+@media only screen and (max-width: 900px){
+    .links p, .out p {
+        display: none;
+    }
+    .out {
+        left: 0;
+        position: relative;
+    }
+}
+
+@media only screen and (max-width: 540px){
+    .logo {
+        filter: opacity(0.1) drop-shadow(0 0 0 white);
+        height: 40px;
+        margin: 10px;
+    }
+}
+
+.content {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}

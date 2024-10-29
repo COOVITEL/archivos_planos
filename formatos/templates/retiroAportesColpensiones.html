@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div>
+    <h1>Retiro Aportes Colpensiones</h1>
+    {% comment %} <a href={% url 'descarga' 'Retiro Aportes Colpensiones'%}>
+        Descargar Retiro Aportes
+    </a> {% endcomment %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Guardar</button>
+    </form>
+</div>
+
+{% endblock content %}

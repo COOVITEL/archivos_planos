@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>
+            {% block title %}
+            {% endblock title %}
+        </title>
+        {% block styles %}
+        {% endblock styles %}
+        {% load static %}
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+    </head>
+    <body>
+        <aside>
+            <a href="{% url "inicio" %}">
+                <picture>
+                    <source media="(min-width: 540px)" srcset="{% static 'images/logoColor.webp' %}">
+                    <img class="logo" src="{% static 'images/logoColorSmall.webp' %}" alt="logo coovitel">
+                </picture>                
+            </a>
+            <div class="content-links">
+                <p>Registros y Descarga de Codigos</p>
+                <nav class="nav-links">
+                    <ul>
+                        <li><a class="link-aside" href="{% url 'ingresoaportescolpensiones' %}">Ingresos Aportes Colpensiones</a></li>
+                        <li><a class="link-aside" href="{% url 'retiroaportescolpensiones' %}">Retiro Aportes Colpensiones</a></li>
+                        <li><a class="link-aside" href="{% url 'ingresocreditocolpensiones' %}">Ingreso Credito Colpensiones</a></li>
+                        <li><a class="link-aside" href="{% url 'retirocreditocolpensiones' %}">Retiro Credito Colpensiones</a></li>
+                        <li><a class="link-aside" href="{% url 'descarga' %}">Descargar</a></li>
+                        <li><a class="link-aside" href="">Codigo Fopep</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+        </aside>
+        
+        <main>
+            {% if request.user.is_authenticated %}
+                <div class="options opt">
+                    <div class="top-settings">
+                        <p>Hola <strong>{{ request.user.first_name|default:request.user.username }}!</strong></p>
+                        <input id="menu-toggle" type="checkbox"/>
+                        <label class="menu-button-container" for="menu-toggle">
+                            <div class="menu-button"></div>
+                        </label>
+                    </div>
+                    <ul class="menu-settigns" id="menu-settings">
+                        <li><a class="buttons-settings" >Cambiar contraseña</a></li>
+                        <li><a class="buttons-settings" href="{% url 'logout' %}">Cerrar Sesión</a></li>
+
+                    </ul>
+
+                </div>
+            {% endif %}
+            <div class="content">
+                {% block content %}        
+                {% endblock content %}
+            </div>
+        </main>
+        {% load static %}
+        <script src="{% static 'scripts/script.js' %}"></script>
+
+    </body>
+</html>
