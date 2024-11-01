@@ -16,7 +16,6 @@ def retiroAportesColpensiones(request):
             return redirect("retiroaportescolpensiones")
     return render(request, 'retiroAportesColpensiones.html', {'form': form})
 
-
 def ingresoAportesColpensiones(request):
     form = AportesColpensiones()
     if request.method == "POST":
@@ -30,7 +29,6 @@ def ingresoAportesColpensiones(request):
             return redirect("ingresoaportescolpensiones")
     return render(request, 'ingresoAportesColpensiones.html', {'form': form})
 
-
 def retiroCreditoColpensiones(request):
     form = CreditoColpensiones()
     if request.method == "POST":
@@ -41,12 +39,15 @@ def retiroCreditoColpensiones(request):
             pagare = form.cleaned_data['pagare']
     
             code = codigoRetiroCreditoColpensiones(afiliacion, documento, pagare)
+
+            if code == 404:
+                error = 'No se encontro registro con ese numero de Cedula y Pagare'
+                return render(request, 'ingresoCreditoColpensiones.html', {'form': form, 'error': error})
             
             registro = RetiroCreditoColpensiones(code=code, documento=int(documento), type="Retiro Credito Colpensiones")
             registro.save()
             return redirect("retirocreditocolpensiones")
     return render(request, 'retiroAportesColpensiones.html', {'form': form})
-
 
 def ingresoCreditoColpensiones(request):
     form = CreditoColpensiones()
@@ -58,12 +59,34 @@ def ingresoCreditoColpensiones(request):
             pagare = form.cleaned_data['pagare']
     
             code = codigoIngresoCreditoColpensiones(afiliacion, documento, pagare)
-            
+
+            if code == 404:
+                error = 'No se encontro registro con ese numero de Cedula y Pagare'
+                return render(request, 'ingresoCreditoColpensiones.html', {'form': form, 'error': error})
+
             registro = IngresoCreditoColpensiones(code=code, documento=int(documento), type="Ingreso Credito Colpensiones")
             registro.save()
             return redirect("ingresocreditocolpensiones")
     return render(request, 'ingresoCreditoColpensiones.html', {'form': form})
 
+def codeFopep(request):
+    form = CodeFopep()
+    if request.method == 'POST':
+        form = CodeFopep(request.POST)
+        if form.is_valid():
+            typeDoc = form.cleaned_data['typeDoc']
+            documento = form.cleaned_data['document']
+            aplication = form.cleaned_data['aplication']
+            aport = form.cleaned_data['aport']
+            libranza = form.cleaned_data['libranza']
+            code = codigoFopep(typeDoc, documento, aplication, aport, libranza)
+            if code == 404:
+                error = 'No se encontro registro con ese numero de Cedula y Pagare'
+                return render(request, 'fopep.html', {'form': form, 'error': error})
+            registerCode = RegistroFopep(code=code, documento=int(documento), type="Registro Fopep")
+            registerCode.save()
+            return redirect('fopep')
+    return render(request, 'fopep.html', {'form': form})
 
 def descargaFormato(request):
     form = DateForms()
@@ -88,8 +111,12 @@ def descargaFormato(request):
             if 'ingreso_credito' in typeCodes:
                 name = "Ingreso Credito"
                 allDatas += IngresoCreditoColpensiones.objects.filter(date__range=[dateInit, dateEnd])
-            for date in allDatas:
-                print(date.date)
+            if 'registro_fopep' in typeCodes:
+                name = "Codigos Fopep"
+                allDatas += RegistroFopep.objects.filter(date__range=[dateInit, dateEnd])
+            if len(allDatas) == 0:
+                error = "No se econtraron registros en ese rango de Fechas"
+                return render(request, 'download.html', {'form': form, 'error': error})
             contenido = "\n".join([str(data.code) for data in allDatas])
             response = HttpResponse(contenido, content_type="text/plain")
             response['Content-Disposition'] = f'attachment; filename="{name}.txt"'

@@ -17,6 +17,5 @@ class IngresoCreditoColpensiones(Registro):
 class RetiroCreditoColpensiones(Registro):
     code = models.CharField(max_length=44)
 
-
 class RegistroFopep(Registro):
     code = models.CharField(max_length=173)

@@ -7,5 +7,6 @@ urlpatterns = [
     path('ingresoAportes/', ingresoAportesColpensiones, name="ingresoaportescolpensiones"),
     path('retiroCredito/', retiroCreditoColpensiones, name="retirocreditocolpensiones"),
     path('ingresoCredito/', ingresoCreditoColpensiones, name="ingresocreditocolpensiones"),
+    path('fopep/', codeFopep, name="fopep"),
     path('descarga/', descargaFormato, name="descarga")
 ]
