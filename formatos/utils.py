@@ -1,6 +1,9 @@
 import pandas as pd
 import cx_Oracle
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def codigoRetiroAportesColpensiones(afiliacion, cedula):
     numAfiliacion = str(afiliacion).rjust(12, "0")
@@ -79,10 +82,10 @@ def usersBase(pagare, cedula):
             and CA090.A_OBLIGA = '{pagare}'
             and AP014.AANUMNIT = '{cedula}'
         """
-    dsn_tns = cx_Oracle.makedsn('192.168.1.12', '1521', service_name='LINIX')
+    dsn_tns = cx_Oracle.makedsn(os.getenv('NAME_SERVER'), os.getenv('PORT'), service_name=os.getenv('SERVICE'))
     # dsn_tns = cx_Oracle.makedsn('10.100.200.38', '1521', service_name='lnxcvt')
     try:
-        with cx_Oracle.connect(user='VISTAS', password='VISTAS', dsn=dsn_tns) as conn:
+        with cx_Oracle.connect(user=os.getenv('USER'), password=os.getenv('PASSWORD'), dsn=dsn_tns) as conn:
         # with cx_Oracle.connect(user='CONSUL', password='CONSULTAR', dsn=dsn_tns) as conn:
             with conn.cursor() as cursor:
                 query = query
@@ -90,6 +93,7 @@ def usersBase(pagare, cedula):
                 cursor.execute(query)
                 # data = cursor.fetchmany(800)
                 data = cursor.fetchall()
+                print(data)
                 columns = [desc[0] for desc in cursor.description]
                 users = [dict(zip(columns, row)) for row  in data]
                 return users

@@ -11,7 +11,12 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from django_auth_ldap.config import LDAPSearch
+from dotenv import load_dotenv
 import os
+import ldap
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,13 +32,37 @@ SECRET_KEY = 'django-insecure-)$w_nx1i&%mr!ls!o3p%@ysf)ufc4gba_adky*u2*vsmtb^wok
 DEBUG = True
 
 LOGIN_REDIRECT_URL = 'inicio'
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
 
 ALLOWED_HOSTS = []
 
+AUTH_LDAP_SERVER_URI = os.getenv("AUTH_LSU")
+
+AUTH_LDAP_BIND_DN = os.getenv("AUTH_LBD")
+AUTH_LDAP_BIND_PASSWORD = os.getenv("AUTH_LBP")
+
+AUTH_LDAP_USER_SEARCH = LDAPSearch(
+    "OU=Users,OU=COOVITEL,DC=coovitel,DC=local",
+    ldap.SCOPE_SUBTREE,
+    "(sAMAccountName=%(user)s)"
+)
+
+AUTH_LDAO_USER_ATTR_MAP = {
+    "first_name": "givenName",
+    "last_name": "sn",
+    "email": "mail"
+}
+
+AUTHENTICATION_BACKENDS = (
+    "django_auth_ldap.backend.LDAPBackend",
+    "django.contrib.auth.backends.ModelBackend"
+)
 
 # Application definition
 
 INSTALLED_APPS = [
+    'django_browser_reload',
     'account.apps.AccountConfig',
     'formatos.apps.FormatosConfig',
     'django.contrib.admin',
@@ -52,6 +81,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 ROOT_URLCONF = 'archivos_planos.urls'

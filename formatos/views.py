@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect, HttpResponse
+from django.contrib.auth.decorators import login_required
 from .forms import *
 from .utils import *
 from .models import *
 
+@login_required
 def retiroAportesColpensiones(request):
     form = AportesColpensiones()
     if request.method == "POST":
@@ -16,6 +18,7 @@ def retiroAportesColpensiones(request):
             return redirect("retiroaportescolpensiones")
     return render(request, 'retiroAportesColpensiones.html', {'form': form})
 
+@login_required
 def ingresoAportesColpensiones(request):
     form = AportesColpensiones()
     if request.method == "POST":
@@ -29,6 +32,7 @@ def ingresoAportesColpensiones(request):
             return redirect("ingresoaportescolpensiones")
     return render(request, 'ingresoAportesColpensiones.html', {'form': form})
 
+@login_required
 def retiroCreditoColpensiones(request):
     form = CreditoColpensiones()
     if request.method == "POST":
@@ -49,6 +53,7 @@ def retiroCreditoColpensiones(request):
             return redirect("retirocreditocolpensiones")
     return render(request, 'retiroAportesColpensiones.html', {'form': form})
 
+@login_required
 def ingresoCreditoColpensiones(request):
     form = CreditoColpensiones()
     if request.method == "POST":
@@ -69,6 +74,7 @@ def ingresoCreditoColpensiones(request):
             return redirect("ingresocreditocolpensiones")
     return render(request, 'ingresoCreditoColpensiones.html', {'form': form})
 
+@login_required
 def codeFopep(request):
     form = CodeFopep()
     if request.method == 'POST':
@@ -88,6 +94,7 @@ def codeFopep(request):
             return redirect('fopep')
     return render(request, 'fopep.html', {'form': form})
 
+@login_required
 def descargaFormato(request):
     form = DateForms()
     if request.method == "POST":
