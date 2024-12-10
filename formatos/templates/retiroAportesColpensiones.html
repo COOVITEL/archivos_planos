@@ -7,6 +7,15 @@
     {% comment %} <a href={% url 'descarga' 'Retiro Aportes Colpensiones'%}>
         Descargar Retiro Aportes
     </a> {% endcomment %}
+
+    {% if messages %}
+        <div class="success">
+            {% for message in messages %}
+                <h1 class="text-success">{{ message }}</h1>
+            {% endfor %}
+        </div>
+    {% endif %}
+
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}

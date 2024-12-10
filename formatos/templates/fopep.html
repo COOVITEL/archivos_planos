@@ -4,12 +4,21 @@
 
 <div class="cont">
     <h1>Registro Codigo Fopep</h1>
+
+    {% if messages %}
+        <div class="success">
+            {% for message in messages %}
+                <h1 class="text-success">{{ message }}</h1>
+            {% endfor %}
+        </div>
+    {% endif %}
+
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Guardar</button>
     </form>
-    <p>{{ error }}</p>
+    <p class="error">{{ error }}</p>
 </div>
 
 {% endblock content %}

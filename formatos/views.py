@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import *
 from .utils import *
 from .models import *
+from django.contrib import messages
 
 @login_required
 def retiroAportesColpensiones(request):
@@ -15,6 +16,7 @@ def retiroAportesColpensiones(request):
             code = codigoRetiroAportesColpensiones(afiliacion, documento)
             registro = RetiroAportesColpensiones(code=code, documento=int(documento), type="Retiro Aportes Colpensiones")
             registro.save()
+            messages.success(request, "!Se ha registrado el código de Retiro Aportes forma exitosa!")
             return redirect("retiroaportescolpensiones")
     return render(request, 'retiroAportesColpensiones.html', {'form': form})
 
@@ -29,6 +31,7 @@ def ingresoAportesColpensiones(request):
             code = codigoIngresoAportesColpensiones(afiliacion, documento)
             registro = IngresoAportesColpensiones(code=code, documento=int(documento), type="Ingreso Aportes Colpensiones")
             registro.save()
+            messages.success(request, "!Se ha registrado el código de Ingreso Aportes forma exitosa!")
             return redirect("ingresoaportescolpensiones")
     return render(request, 'ingresoAportesColpensiones.html', {'form': form})
 
@@ -50,8 +53,9 @@ def retiroCreditoColpensiones(request):
             
             registro = RetiroCreditoColpensiones(code=code, documento=int(documento), type="Retiro Credito Colpensiones")
             registro.save()
+            messages.success(request, "!Se ha registrado el código de Retiro Crédito forma exitosa!")
             return redirect("retirocreditocolpensiones")
-    return render(request, 'retiroAportesColpensiones.html', {'form': form})
+    return render(request, 'retiroCreditoColpensiones.html', {'form': form})
 
 @login_required
 def ingresoCreditoColpensiones(request):
@@ -71,6 +75,7 @@ def ingresoCreditoColpensiones(request):
 
             registro = IngresoCreditoColpensiones(code=code, documento=int(documento), type="Ingreso Credito Colpensiones")
             registro.save()
+            messages.success(request, "!Se ha registrado el código de Ingreso Crédito forma exitosa!")
             return redirect("ingresocreditocolpensiones")
     return render(request, 'ingresoCreditoColpensiones.html', {'form': form})
 
@@ -91,6 +96,7 @@ def codeFopep(request):
                 return render(request, 'fopep.html', {'form': form, 'error': error})
             registerCode = RegistroFopep(code=code, documento=int(documento), type="Registro Fopep")
             registerCode.save()
+            messages.success(request, "!Se ha registrado el código de Fopep forma exitosa!")
             return redirect('fopep')
     return render(request, 'fopep.html', {'form': form})
 

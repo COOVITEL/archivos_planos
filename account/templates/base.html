@@ -13,6 +13,7 @@
         {% load django_browser_reload %}
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/png" href="images/logoup.png">
         <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
         <link rel="stylesheet" type="text/css" href="{% static 'css/forms.css' %}"/>
     </head>
@@ -25,14 +26,14 @@
                 </picture>                
             </a>
             <div class="content-links">
-                <p>Registros y Descarga de Codigos</p>
+                <p>Registros y Descarga de Códigos</p>
                 <nav class="nav-links">
                     <ul>
                         <li><a class="link-aside" href="{% url 'ingresoaportescolpensiones' %}">Ingresos Aportes Colpensiones</a></li>
                         <li><a class="link-aside" href="{% url 'retiroaportescolpensiones' %}">Retiro Aportes Colpensiones</a></li>
-                        <li><a class="link-aside" href="{% url 'ingresocreditocolpensiones' %}">Ingreso Credito Colpensiones</a></li>
-                        <li><a class="link-aside" href="{% url 'retirocreditocolpensiones' %}">Retiro Credito Colpensiones</a></li>
-                        <li><a class="link-aside" href="{% url 'fopep' %}">Codigo Fopep</a></li>
+                        <li><a class="link-aside" href="{% url 'ingresocreditocolpensiones' %}">Ingreso Crédito Colpensiones</a></li>
+                        <li><a class="link-aside" href="{% url 'retirocreditocolpensiones' %}">Retiro Crédito Colpensiones</a></li>
+                        <li><a class="link-aside" href="{% url 'fopep' %}">Código Fopep</a></li>
                         <li><a class="link-aside" href="{% url 'descarga' %}">Descargar</a></li>
                     </ul>
                 </nav>

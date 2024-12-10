@@ -3,16 +3,24 @@
 {% block content %}
 
 <div class="cont">
-    <h1>Ingreso Credito Colpensiones</h1>
+    <h1>Ingreso Crédito Colpensiones</h1>
     {% comment %} <a href={% url 'descarga' 'Ingreso Credito Colpensiones'%}>
         Descargar Ingreso Credito
     </a> {% endcomment %}
+    {% if messages %}
+        <div class="success">
+            {% for message in messages %}
+                <h1 class="text-success">{{ message }}</h1>
+            {% endfor %}
+        </div>
+    {% endif %}
+
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Guardar</button>
     </form>
-    <p>{{ error }}</p>
+    <p class="error">{{ error }}</p>
 </div>
 
 {% endblock content %}
